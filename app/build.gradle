@@ -15,10 +15,15 @@ repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
 }
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
 
 dependencies {
     // This dependency is used by the application.
     implementation libs.guava
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
 }
 
 testing {
