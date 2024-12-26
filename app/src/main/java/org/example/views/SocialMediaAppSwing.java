@@ -1,4 +1,4 @@
-package org.example;
+package org.example.views;
 
 import org.example.controllers.ChannelController;
 import org.example.models.Channel;

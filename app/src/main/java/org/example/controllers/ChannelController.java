@@ -36,7 +36,6 @@ public class ChannelController {
         channel.unsubscribe(user);
     }
 
-
     public void addPost(Post post) {
         channel.addPosts(post);
     }
