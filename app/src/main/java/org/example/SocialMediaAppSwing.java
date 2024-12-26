@@ -32,7 +32,7 @@ public class SocialMediaAppSwing {
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        JLabel titleLabel = new JLabel("Social Media App", SwingConstants.CENTER);
+        JLabel titleLabel = new JLabel("Social Media App Entry point", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
         titleLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 20, 0));
         mainPanel.add(titleLabel, BorderLayout.NORTH);
@@ -384,38 +384,155 @@ public class SocialMediaAppSwing {
 
     }
 
+    // private void viewPostsUI() {
+    //     // Main Frame
+    //     JFrame frame = new JFrame("View Posts");
+    //     try {
+    //         frame.setSize(500, 500);
+    //         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    //         frame.setLayout(new BorderLayout());
+    //         frame.getContentPane().setBackground(new Color(240, 248, 255));
+
+    //         // Username Field
+    //         JTextField usernameField = new JTextField();
+    //         usernameField.setFont(new Font("Arial", Font.PLAIN, 16));
+    //         usernameField.setBorder(BorderFactory.createCompoundBorder(
+    //                 BorderFactory.createLineBorder(new Color(100, 149, 237), 2),
+    //                 BorderFactory.createEmptyBorder(5, 10, 5, 10)));
+
+    //         // Channel Name Field
+    //         JTextField channelNameField = new JTextField();
+    //         channelNameField.setFont(new Font("Arial", Font.PLAIN, 16));
+    //         channelNameField.setBorder(BorderFactory.createCompoundBorder(
+    //                 BorderFactory.createLineBorder(new Color(100, 149, 237), 2),
+    //                 BorderFactory.createEmptyBorder(5, 10, 5, 10)));
+
+    //         // View Button
+    //         JButton viewButton = new JButton("View");
+    //         viewButton.setFont(new Font("Arial", Font.BOLD, 16));
+    //         viewButton.setForeground(Color.WHITE);
+    //         viewButton.setBackground(new Color(65, 105, 225));
+    //         viewButton.setFocusPainted(false);
+    //         viewButton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+    //         viewButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+    //         // Posts Area
+    //         JTextArea postsArea = new JTextArea();
+    //         postsArea.setEditable(false);
+    //         postsArea.setFont(new Font("Arial", Font.PLAIN, 14));
+    //         postsArea.setBorder(BorderFactory.createCompoundBorder(
+    //                 BorderFactory.createLineBorder(new Color(211, 211, 211), 1),
+    //                 BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+    //         postsArea.setLineWrap(true);
+    //         postsArea.setWrapStyleWord(true);
+
+    //         JScrollPane scrollPane = new JScrollPane(postsArea);
+    //         scrollPane.setBorder(BorderFactory.createTitledBorder(
+    //                 BorderFactory.createLineBorder(new Color(100, 149, 237), 2),
+    //                 "Posts",
+    //                 0,
+    //                 0,
+    //                 new Font("Arial", Font.BOLD, 14),
+    //                 new Color(65, 105, 225)));
+
+    //         // Input Panel
+    //         JPanel inputPanel = new JPanel(new GridLayout(3, 2, 10, 10));
+    //         inputPanel.setBackground(new Color(240, 248, 255));
+    //         inputPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+    //         inputPanel.add(new JLabel("Username:"));
+    //         inputPanel.add(usernameField);
+    //         inputPanel.add(new JLabel("Channel Name:"));
+    //         inputPanel.add(channelNameField);
+    //         inputPanel.add(new JLabel()); // Placeholder for alignment
+    //         inputPanel.add(viewButton);
+
+    //         // Action Listener
+    //         viewButton.addActionListener(e -> {
+    //             String username = usernameField.getText().trim();
+    //             String channelName = channelNameField.getText().trim();
+    //             if (username.isEmpty() || channelName.isEmpty()) {
+    //                 JOptionPane.showMessageDialog(frame, "Both fields are required.");
+    //                 return;
+    //             }
+    //             ChannelController controller = channels.get(channelName);
+    //             if (controller == null) {
+    //                 JOptionPane.showMessageDialog(frame, "Channel not found.");
+    //                 return;
+    //             }
+    //             User user = users.get(username);
+    //             if (user == null) {
+    //                 JOptionPane.showMessageDialog(frame, "User not found or not subscribed.");
+    //                 return;
+    //             }
+    //             if (!controller.getChannel().getSubscribers().contains(user)) {
+    //                 JOptionPane.showMessageDialog(frame, "User not subscribed.");
+    //                 return;
+    //             }
+    //             List<Post> posts = controller.getChannel().getPostsForUser(user);
+    //             postsArea.setText("");
+    //             if (posts.isEmpty()) {
+    //                 postsArea.setText("No posts available.");
+    //             } else {
+    //                 for (Post post : posts) {
+    //                     postsArea.append(post.getContent() + "\n");
+    //                 }
+    //             }
+    //         });
+
+    //         // Add Panels to Frame
+    //         frame.add(inputPanel, BorderLayout.NORTH);
+    //         frame.add(scrollPane, BorderLayout.CENTER);
+
+    //         // Display Frame
+    //         frame.setVisible(true);
+    //     } catch (Exception ex) {
+    //         JOptionPane.showMessageDialog(frame, ex.getMessage());
+    //         return;
+    //     }
+
+    // }
+
     private void viewPostsUI() {
-        // Main Frame
         JFrame frame = new JFrame("View Posts");
         try {
-            frame.setSize(500, 500);
+            frame.setSize(600, 600);
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             frame.setLayout(new BorderLayout());
             frame.getContentPane().setBackground(new Color(240, 248, 255));
-
+    
             // Username Field
             JTextField usernameField = new JTextField();
             usernameField.setFont(new Font("Arial", Font.PLAIN, 16));
             usernameField.setBorder(BorderFactory.createCompoundBorder(
                     BorderFactory.createLineBorder(new Color(100, 149, 237), 2),
                     BorderFactory.createEmptyBorder(5, 10, 5, 10)));
-
-            // Channel Name Field
-            JTextField channelNameField = new JTextField();
-            channelNameField.setFont(new Font("Arial", Font.PLAIN, 16));
-            channelNameField.setBorder(BorderFactory.createCompoundBorder(
+    
+            // Channel Dropdown
+            JComboBox<String> channelDropdown = new JComboBox<>();
+            channelDropdown.setFont(new Font("Arial", Font.PLAIN, 16));
+            channelDropdown.setBorder(BorderFactory.createCompoundBorder(
                     BorderFactory.createLineBorder(new Color(100, 149, 237), 2),
                     BorderFactory.createEmptyBorder(5, 10, 5, 10)));
-
+    
             // View Button
-            JButton viewButton = new JButton("View");
+            JButton viewButton = new JButton("View Posts");
             viewButton.setFont(new Font("Arial", Font.BOLD, 16));
             viewButton.setForeground(Color.WHITE);
             viewButton.setBackground(new Color(65, 105, 225));
             viewButton.setFocusPainted(false);
             viewButton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
             viewButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
+    
+            // Load Channels Button
+            JButton loadChannelsButton = new JButton("Load Subscribed Channels");
+            loadChannelsButton.setFont(new Font("Arial", Font.BOLD, 16));
+            loadChannelsButton.setForeground(Color.WHITE);
+            loadChannelsButton.setBackground(new Color(34, 139, 34));
+            loadChannelsButton.setFocusPainted(false);
+            loadChannelsButton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+            loadChannelsButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    
             // Posts Area
             JTextArea postsArea = new JTextArea();
             postsArea.setEditable(false);
@@ -425,7 +542,7 @@ public class SocialMediaAppSwing {
                     BorderFactory.createEmptyBorder(10, 10, 10, 10)));
             postsArea.setLineWrap(true);
             postsArea.setWrapStyleWord(true);
-
+    
             JScrollPane scrollPane = new JScrollPane(postsArea);
             scrollPane.setBorder(BorderFactory.createTitledBorder(
                     BorderFactory.createLineBorder(new Color(100, 149, 237), 2),
@@ -434,25 +551,50 @@ public class SocialMediaAppSwing {
                     0,
                     new Font("Arial", Font.BOLD, 14),
                     new Color(65, 105, 225)));
-
+    
             // Input Panel
             JPanel inputPanel = new JPanel(new GridLayout(3, 2, 10, 10));
             inputPanel.setBackground(new Color(240, 248, 255));
             inputPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-
+    
             inputPanel.add(new JLabel("Username:"));
             inputPanel.add(usernameField);
-            inputPanel.add(new JLabel("Channel Name:"));
-            inputPanel.add(channelNameField);
-            inputPanel.add(new JLabel()); // Placeholder for alignment
+            inputPanel.add(new JLabel("Subscribed Channels:"));
+            inputPanel.add(channelDropdown);
+            inputPanel.add(loadChannelsButton);
             inputPanel.add(viewButton);
-
-            // Action Listener
+    
+            // Load Channels Action
+            loadChannelsButton.addActionListener(e -> {
+                channelDropdown.removeAllItems();
+                String username = usernameField.getText().trim();
+                if (username.isEmpty()) {
+                    JOptionPane.showMessageDialog(frame, "Username is required.");
+                    return;
+                }
+                User user = users.get(username);
+                if (user == null) {
+                    JOptionPane.showMessageDialog(frame, "User not found.");
+                    return;
+                }
+                
+                for (String channelName : channels.keySet()) {
+                    ChannelController controller = channels.get(channelName);
+                    if (controller != null && controller.getChannel().getSubscribers().contains(user)) {
+                        channelDropdown.addItem(channelName);
+                    }
+                }
+                if (channelDropdown.getItemCount() == 0) {
+                    JOptionPane.showMessageDialog(frame, "No subscribed channels found.");
+                }
+            });
+    
+            // View Posts Action
             viewButton.addActionListener(e -> {
                 String username = usernameField.getText().trim();
-                String channelName = channelNameField.getText().trim();
-                if (username.isEmpty() || channelName.isEmpty()) {
-                    JOptionPane.showMessageDialog(frame, "Both fields are required.");
+                String channelName = (String) channelDropdown.getSelectedItem();
+                if (username.isEmpty() || channelName == null) {
+                    JOptionPane.showMessageDialog(frame, "Both username and channel are required.");
                     return;
                 }
                 ChannelController controller = channels.get(channelName);
@@ -461,12 +603,8 @@ public class SocialMediaAppSwing {
                     return;
                 }
                 User user = users.get(username);
-                if (user == null) {
-                    JOptionPane.showMessageDialog(frame, "User not found or not subscribed.");
-                    return;
-                }
-                if (!controller.getChannel().getSubscribers().contains(user)) {
-                    JOptionPane.showMessageDialog(frame, "User not subscribed.");
+                if (user == null || !controller.getChannel().getSubscribers().contains(user)) {
+                    JOptionPane.showMessageDialog(frame, "User not subscribed to this channel.");
                     return;
                 }
                 List<Post> posts = controller.getChannel().getPostsForUser(user);
@@ -479,19 +617,18 @@ public class SocialMediaAppSwing {
                     }
                 }
             });
-
+    
             // Add Panels to Frame
             frame.add(inputPanel, BorderLayout.NORTH);
             frame.add(scrollPane, BorderLayout.CENTER);
-
+    
             // Display Frame
             frame.setVisible(true);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(frame, ex.getMessage());
-            return;
         }
-
     }
+    
 
     private void listChannelsUI() {
         JFrame frame = new JFrame("List Channels");
