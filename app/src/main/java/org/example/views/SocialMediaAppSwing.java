@@ -61,7 +61,8 @@ public class SocialMediaAppSwing {
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        JLabel titleLabel = new JLabel("Social Media App"+ (isChannel ? "(Channel UI)" : "(User UI)"), SwingConstants.CENTER);
+        JLabel titleLabel = new JLabel("Social Media App" + (isChannel ? "(Channel UI)" : "(User UI)"),
+                SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
         titleLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 20, 0));
         mainPanel.add(titleLabel, BorderLayout.NORTH);
@@ -115,128 +116,147 @@ public class SocialMediaAppSwing {
 
     private void createChannelUI() {
         JFrame frame = new JFrame("Create Channel");
-        frame.setSize(400, 250);
-        frame.setLayout(new BorderLayout());
+        try {
 
-        JPanel inputPanel = new JPanel(new BorderLayout(10, 10));
-        inputPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+            frame.setSize(400, 250);
+            frame.setLayout(new BorderLayout());
 
-        JLabel channelLabel = new JLabel("Channel Name:");
-        channelLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+            JPanel inputPanel = new JPanel(new BorderLayout(10, 10));
+            inputPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        JTextField channelNameField = new JTextField();
-        JButton createButton = createStyledButton("Create");
+            JLabel channelLabel = new JLabel("Channel Name:");
+            channelLabel.setFont(new Font("Arial", Font.PLAIN, 14));
 
-        createButton.addActionListener(e -> {
-            String channelName = channelNameField.getText().trim();
-            if (channelName.isEmpty()) {
-                JOptionPane.showMessageDialog(frame, "Channel name cannot be empty.");
-                return;
-            }
-            if (channels.containsKey(channelName)) {
-                JOptionPane.showMessageDialog(frame, "Channel already exists.");
-                return;
-            }
-            Channel channel = new Channel(new ArrayList<>(), new ArrayList<>(), channelName);
-            channels.put(channelName, new ChannelController(channel));
-            JOptionPane.showMessageDialog(frame, "Channel created successfully!");
-            frame.dispose();
-        });
+            JTextField channelNameField = new JTextField();
+            JButton createButton = createStyledButton("Create");
 
-        inputPanel.add(channelLabel, BorderLayout.NORTH);
-        inputPanel.add(channelNameField, BorderLayout.CENTER);
-        inputPanel.add(createButton, BorderLayout.SOUTH);
-        frame.add(inputPanel);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+            createButton.addActionListener(e -> {
+                String channelName = channelNameField.getText().trim();
+                if (channelName.isEmpty()) {
+                    JOptionPane.showMessageDialog(frame, "Channel name cannot be empty.");
+                    return;
+                }
+                if (channels.containsKey(channelName)) {
+                    JOptionPane.showMessageDialog(frame, "Channel already exists.");
+                    return;
+                }
+                Channel channel = new Channel(new ArrayList<>(), new ArrayList<>(), channelName);// Null Pointer to
+                                                                                                 // secure
+                channels.put(channelName, new ChannelController(channel));
+                JOptionPane.showMessageDialog(frame, "Channel created successfully!");
+                frame.dispose();
+            });
+
+            inputPanel.add(channelLabel, BorderLayout.NORTH);
+            inputPanel.add(channelNameField, BorderLayout.CENTER);
+            inputPanel.add(createButton, BorderLayout.SOUTH);
+            frame.add(inputPanel);
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+
+        } catch (NullPointerException ex) {
+            JOptionPane.showMessageDialog(frame, "Error: " + ex.getMessage());
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(frame, "Error: " + ex.getMessage());
+        }
+
     }
 
     private void subscribeUI() {
         // Main Frame
         JFrame frame = new JFrame("Subscribe to Channel");
-        frame.setSize(500, 400);
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setLayout(new BorderLayout());
-        frame.getContentPane().setBackground(new Color(240, 248, 255));
+        try {
 
-        // Username Field
-        JTextField usernameField = new JTextField();
-        usernameField.setFont(new Font("Arial", Font.PLAIN, 16));
-        usernameField.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(new Color(100, 149, 237), 2),
-                BorderFactory.createEmptyBorder(5, 10, 5, 10)));
-        usernameField.setPreferredSize(new Dimension(usernameField.getWidth(), 25));
+            frame.setSize(500, 400);
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            frame.setLayout(new BorderLayout());
+            frame.getContentPane().setBackground(new Color(240, 248, 255));
 
-        // Channel Dropdown
-        JComboBox<String> channelDropdown = new JComboBox<>();
-        channelDropdown.setFont(new Font("Arial", Font.PLAIN, 16));
-        channelDropdown.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(new Color(100, 149, 237), 2),
-                BorderFactory.createEmptyBorder(5, 10, 5, 10)));
+            // Username Field
+            JTextField usernameField = new JTextField();
+            usernameField.setFont(new Font("Arial", Font.PLAIN, 16));
+            usernameField.setBorder(BorderFactory.createCompoundBorder(
+                    BorderFactory.createLineBorder(new Color(100, 149, 237), 2),
+                    BorderFactory.createEmptyBorder(5, 10, 5, 10)));
+            usernameField.setPreferredSize(new Dimension(usernameField.getWidth(), 25));
 
-        // Populate Available Channels
-        for (String channelName : channels.keySet()) {
-            channelDropdown.addItem(channelName);
+            // Channel Dropdown
+            JComboBox<String> channelDropdown = new JComboBox<>();
+            channelDropdown.setFont(new Font("Arial", Font.PLAIN, 16));
+            channelDropdown.setBorder(BorderFactory.createCompoundBorder(
+                    BorderFactory.createLineBorder(new Color(100, 149, 237), 2),
+                    BorderFactory.createEmptyBorder(5, 10, 5, 10)));
+
+            // Populate Available Channels
+            for (String channelName : channels.keySet()) {
+                channelDropdown.addItem(channelName);
+            }
+
+            // Subscribe Button
+            JButton subscribeButton = new JButton("Subscribe");
+            subscribeButton.setFont(new Font("Arial", Font.BOLD, 16));
+            subscribeButton.setForeground(Color.WHITE);
+            subscribeButton.setBackground(new Color(65, 105, 225));
+            subscribeButton.setFocusPainted(false);
+            subscribeButton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+            subscribeButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+            // Action Listener
+            subscribeButton.addActionListener(e -> {
+                String username = usernameField.getText().trim();
+                String channelName = (String) channelDropdown.getSelectedItem();
+                if (username.isEmpty()) {
+                    JOptionPane.showMessageDialog(frame, "Username is required.");
+                    return;
+                }
+                if (channelName == null || channelName.isEmpty()) {
+                    JOptionPane.showMessageDialog(frame, "No channel selected.");
+                    return;
+                }
+                ChannelController controller = channels.get(channelName);
+                if (controller == null) {
+                    JOptionPane.showMessageDialog(frame, "Channel not found.");
+                    return;
+                }
+                User user = users.computeIfAbsent(username, User::new);
+                try {
+                    controller.subscribeUser(user);
+                    JOptionPane.showMessageDialog(frame, "Subscribed successfully!");
+                    frame.dispose();
+                } catch (IllegalArgumentException ex) {
+                    JOptionPane.showMessageDialog(frame, ex.getMessage());
+                }
+            });
+
+            // Input Panel
+            JPanel inputPanel = new JPanel(new GridLayout(3, 2, 10, 10));
+            inputPanel.setBackground(new Color(240, 248, 255));
+            inputPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+            inputPanel.add(new JLabel("Username:"));
+            inputPanel.add(usernameField);
+            inputPanel.add(new JLabel("Available Channels:"));
+            inputPanel.add(channelDropdown);
+
+            // Button Panel
+            JPanel buttonPanel = new JPanel();
+            buttonPanel.setBackground(new Color(240, 248, 255));
+            buttonPanel.add(subscribeButton);
+
+            // Add Components to Frame
+            frame.add(inputPanel, BorderLayout.CENTER);
+            frame.add(buttonPanel, BorderLayout.SOUTH);
+
+            frame.setLocationRelativeTo(null);
+
+            // Display Frame
+            frame.setVisible(true);
+
+        } catch (ClassCastException ex) {
+            JOptionPane.showMessageDialog(frame, "Error: Invalid selection in dropdown.");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(frame, ex.getMessage());
         }
 
-        // Subscribe Button
-        JButton subscribeButton = new JButton("Subscribe");
-        subscribeButton.setFont(new Font("Arial", Font.BOLD, 16));
-        subscribeButton.setForeground(Color.WHITE);
-        subscribeButton.setBackground(new Color(65, 105, 225));
-        subscribeButton.setFocusPainted(false);
-        subscribeButton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
-        subscribeButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
-        // Action Listener
-        subscribeButton.addActionListener(e -> {
-            String username = usernameField.getText().trim();
-            String channelName = (String) channelDropdown.getSelectedItem();
-            if (username.isEmpty()) {
-                JOptionPane.showMessageDialog(frame, "Username is required.");
-                return;
-            }
-            if (channelName == null || channelName.isEmpty()) {
-                JOptionPane.showMessageDialog(frame, "No channel selected.");
-                return;
-            }
-            ChannelController controller = channels.get(channelName);
-            if (controller == null) {
-                JOptionPane.showMessageDialog(frame, "Channel not found.");
-                return;
-            }
-            User user = users.computeIfAbsent(username, User::new);
-            try {
-                controller.subscribeUser(user);
-                JOptionPane.showMessageDialog(frame, "Subscribed successfully!");
-                frame.dispose();
-            } catch (IllegalArgumentException ex) {
-                JOptionPane.showMessageDialog(frame, ex.getMessage());
-            }
-        });
-
-        // Input Panel
-        JPanel inputPanel = new JPanel(new GridLayout(3, 2, 10, 10));
-        inputPanel.setBackground(new Color(240, 248, 255));
-        inputPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        inputPanel.add(new JLabel("Username:"));
-        inputPanel.add(usernameField);
-        inputPanel.add(new JLabel("Available Channels:"));
-        inputPanel.add(channelDropdown);
-
-        // Button Panel
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setBackground(new Color(240, 248, 255));
-        buttonPanel.add(subscribeButton);
-
-        // Add Components to Frame
-        frame.add(inputPanel, BorderLayout.CENTER);
-        frame.add(buttonPanel, BorderLayout.SOUTH);
-
-        frame.setLocationRelativeTo(null);
-
-        // Display Frame
-        frame.setVisible(true);
     }
 
     private void postMessageUI() {
@@ -314,6 +334,8 @@ public class SocialMediaAppSwing {
             // Display Frame
             frame.setVisible(true);
 
+        } catch (NullPointerException ex) {
+            JOptionPane.showMessageDialog(frame, ex.getMessage());
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(frame, ex.getMessage());
             return;
@@ -324,116 +346,125 @@ public class SocialMediaAppSwing {
     private void unsubscribeUI() {
         // Main Frame
         JFrame frame = new JFrame("Unsubscribe from a Channel");
-        frame.setSize(500, 400);
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setLayout(new BorderLayout());
-        frame.getContentPane().setBackground(new Color(240, 248, 255));
+        try {
+            frame.setSize(500, 400);
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            frame.setLayout(new BorderLayout());
+            frame.getContentPane().setBackground(new Color(240, 248, 255));
 
-        // Username Field
-        JTextField usernameField = new JTextField();
-        usernameField.setFont(new Font("Arial", Font.PLAIN, 16));
-        usernameField.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(new Color(100, 149, 237), 2),
-                BorderFactory.createEmptyBorder(5, 10, 5, 10)));
-        usernameField.setPreferredSize(new Dimension(usernameField.getWidth(), 25));
+            // Username Field
+            JTextField usernameField = new JTextField();
+            usernameField.setFont(new Font("Arial", Font.PLAIN, 16));
+            usernameField.setBorder(BorderFactory.createCompoundBorder(
+                    BorderFactory.createLineBorder(new Color(100, 149, 237), 2),
+                    BorderFactory.createEmptyBorder(5, 10, 5, 10)));
+            usernameField.setPreferredSize(new Dimension(usernameField.getWidth(), 25));
 
-        // Channel Dropdown
-        JComboBox<String> channelDropdown = new JComboBox<>();
-        channelDropdown.setFont(new Font("Arial", Font.PLAIN, 16));
-        channelDropdown.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(new Color(100, 149, 237), 2),
-                BorderFactory.createEmptyBorder(5, 10, 5, 10)));
+            // Channel Dropdown
+            JComboBox<String> channelDropdown = new JComboBox<>();
+            channelDropdown.setFont(new Font("Arial", Font.PLAIN, 16));
+            channelDropdown.setBorder(BorderFactory.createCompoundBorder(
+                    BorderFactory.createLineBorder(new Color(100, 149, 237), 2),
+                    BorderFactory.createEmptyBorder(5, 10, 5, 10)));
 
-        // Load Channels Button
-        JButton loadChannelsButton = new JButton("Load Subscribed Channels");
-        loadChannelsButton.setFont(new Font("Arial", Font.BOLD, 16));
-        loadChannelsButton.setForeground(Color.WHITE);
-        loadChannelsButton.setBackground(new Color(34, 139, 34));
-        loadChannelsButton.setFocusPainted(false);
-        loadChannelsButton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
-        loadChannelsButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            // Load Channels Button
+            JButton loadChannelsButton = new JButton("Load Subscribed Channels");
+            loadChannelsButton.setFont(new Font("Arial", Font.BOLD, 16));
+            loadChannelsButton.setForeground(Color.WHITE);
+            loadChannelsButton.setBackground(new Color(34, 139, 34));
+            loadChannelsButton.setFocusPainted(false);
+            loadChannelsButton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+            loadChannelsButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        // Unsubscribe Button
-        JButton unsubscribeButton = new JButton("Unsubscribe");
-        unsubscribeButton.setFont(new Font("Arial", Font.BOLD, 16));
-        unsubscribeButton.setForeground(Color.WHITE);
-        unsubscribeButton.setBackground(new Color(65, 105, 225));
-        unsubscribeButton.setFocusPainted(false);
-        unsubscribeButton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
-        unsubscribeButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            // Unsubscribe Button
+            JButton unsubscribeButton = new JButton("Unsubscribe");
+            unsubscribeButton.setFont(new Font("Arial", Font.BOLD, 16));
+            unsubscribeButton.setForeground(Color.WHITE);
+            unsubscribeButton.setBackground(new Color(65, 105, 225));
+            unsubscribeButton.setFocusPainted(false);
+            unsubscribeButton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+            unsubscribeButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        // Load Channels Action
-        loadChannelsButton.addActionListener(e -> {
-            String username = usernameField.getText().trim();
-            if (username.isEmpty()) {
-                JOptionPane.showMessageDialog(frame, "Username is required.");
-                return;
-            }
-            User user = users.get(username);
-            if (user == null) {
-                JOptionPane.showMessageDialog(frame, "User not found.");
-                return;
-            }
-            channelDropdown.removeAllItems();
-            for (String channelName : channels.keySet()) {
-                ChannelController controller = channels.get(channelName);
-                if (controller != null && controller.getChannel().getSubscribers().contains(user)) {
-                    channelDropdown.addItem(channelName);
+            // Load Channels Action
+            loadChannelsButton.addActionListener(e -> {
+                String username = usernameField.getText().trim();
+                if (username.isEmpty()) {
+                    JOptionPane.showMessageDialog(frame, "Username is required.");
+                    return;
                 }
-            }
-            if (channelDropdown.getItemCount() == 0) {
-                JOptionPane.showMessageDialog(frame, "No subscribed channels found.");
-            }
-        });
 
-        // Unsubscribe Action
-        unsubscribeButton.addActionListener(e -> {
-            String username = usernameField.getText().trim();
-            String channelName = (String) channelDropdown.getSelectedItem();
-            if (username.isEmpty() || channelName == null) {
-                JOptionPane.showMessageDialog(frame, "Username and channel must be specified.");
-                return;
-            }
-            ChannelController controller = channels.get(channelName);
-            if (controller == null) {
-                JOptionPane.showMessageDialog(frame, "Channel not found.");
-                return;
-            }
-            User user = users.get(username);
-            if (user == null || !controller.getChannel().getSubscribers().contains(user)) {
-                JOptionPane.showMessageDialog(frame, "User not subscribed to this channel.");
-                return;
-            }
-            try {
-                controller.unsubscribeUser(user);
-                JOptionPane.showMessageDialog(frame, "Unsubscribed successfully!");
-                frame.dispose();
-            } catch (IllegalArgumentException ex) {
-                JOptionPane.showMessageDialog(frame, ex.getMessage());
-            }
-        });
+                User user = users.get(username);
+                if (user == null) {
+                    JOptionPane.showMessageDialog(frame, "User not found.");
+                    return;
+                }
+                channelDropdown.removeAllItems();
+                for (String channelName : channels.keySet()) {
+                    ChannelController controller = channels.get(channelName);
+                    if (controller != null && controller.getChannel().getSubscribers().contains(user)) {
+                        channelDropdown.addItem(channelName);
+                    }
+                }
+                if (channelDropdown.getItemCount() == 0) {
+                    JOptionPane.showMessageDialog(frame, "No subscribed channels found.");
+                }
+            });
 
-        // Input Panel
-        JPanel inputPanel = new JPanel(new GridLayout(3, 2, 10, 10));
-        inputPanel.setBackground(new Color(240, 248, 255));
-        inputPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        inputPanel.add(new JLabel("Username:"));
-        inputPanel.add(usernameField);
-        inputPanel.add(new JLabel("Subscribed Channels:"));
-        inputPanel.add(channelDropdown);
+            // Unsubscribe Action
+            unsubscribeButton.addActionListener(e -> {
+                String username = usernameField.getText().trim();
+                String channelName = (String) channelDropdown.getSelectedItem();
+                if (username.isEmpty() || channelName == null) {
+                    JOptionPane.showMessageDialog(frame, "Username and channel must be specified.");
+                    return;
+                }
+                ChannelController controller = channels.get(channelName);
+                if (controller == null) {
+                    JOptionPane.showMessageDialog(frame, "Channel not found.");
+                    return;
+                }
+                User user = users.get(username);
+                if (user == null || !controller.getChannel().getSubscribers().contains(user)) {
+                    JOptionPane.showMessageDialog(frame, "User not subscribed to this channel.");
+                    return;
+                }
+                try {
+                    controller.unsubscribeUser(user);
+                    JOptionPane.showMessageDialog(frame, "Unsubscribed successfully!");
+                    frame.dispose();
+                } catch (IllegalArgumentException ex) {
+                    JOptionPane.showMessageDialog(frame, ex.getMessage());
+                }
+            });
 
-        // Button Panel
-        JPanel buttonPanel = new JPanel(new GridLayout(1, 2, 10, 10));
-        buttonPanel.setBackground(new Color(240, 248, 255));
-        buttonPanel.add(loadChannelsButton);
-        buttonPanel.add(unsubscribeButton);
+            // Input Panel
+            JPanel inputPanel = new JPanel(new GridLayout(3, 2, 10, 10));
+            inputPanel.setBackground(new Color(240, 248, 255));
+            inputPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+            inputPanel.add(new JLabel("Username:"));
+            inputPanel.add(usernameField);
+            inputPanel.add(new JLabel("Subscribed Channels:"));
+            inputPanel.add(channelDropdown);
 
-        // Add Components to Frame
-        frame.add(inputPanel, BorderLayout.CENTER);
-        frame.add(buttonPanel, BorderLayout.SOUTH);
-        frame.setLocationRelativeTo(null);
-        // Display Frame
-        frame.setVisible(true);
+            // Button Panel
+            JPanel buttonPanel = new JPanel(new GridLayout(1, 2, 10, 10));
+            buttonPanel.setBackground(new Color(240, 248, 255));
+            buttonPanel.add(loadChannelsButton);
+            buttonPanel.add(unsubscribeButton);
+
+            // Add Components to Frame
+            frame.add(inputPanel, BorderLayout.CENTER);
+            frame.add(buttonPanel, BorderLayout.SOUTH);
+            frame.setLocationRelativeTo(null);
+            // Display Frame
+            frame.setVisible(true);
+
+        } catch (ClassCastException ex) {
+            JOptionPane.showMessageDialog(frame, "Error: Invalid selection in dropdown.");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(frame, ex.getMessage());
+        }
+
     }
 
     private void viewPostsUI() {
@@ -554,6 +585,7 @@ public class SocialMediaAppSwing {
                 postsArea.setText("");
                 if (posts.isEmpty()) {
                     postsArea.setText("No posts available.");
+                    throw new IndexOutOfBoundsException("No posts available.");
                 } else {
                     for (Post post : posts) {
                         postsArea.append(post.getContent() + "\n");
@@ -567,9 +599,14 @@ public class SocialMediaAppSwing {
             frame.setLocationRelativeTo(null);
             // Display Frame
             frame.setVisible(true);
+        } catch (ClassCastException ex) {
+            JOptionPane.showMessageDialog(frame, "Error: Invalid selection in dropdown.");
+        } catch (IndexOutOfBoundsException ex) {
+            JOptionPane.showMessageDialog(frame, "Error: " + ex.getMessage());
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(frame, ex.getMessage());
         }
+
     }
 
     private void listChannelsUI() {
