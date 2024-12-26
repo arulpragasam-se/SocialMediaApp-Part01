@@ -50,17 +50,18 @@ public class SocialMediaAppSwing {
         mainPanel.add(buttonPanel, BorderLayout.CENTER);
 
         frame.add(mainPanel);
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 
     private void createMainUI(boolean isChannel) {
-        JFrame frame = new JFrame("Social Media App");
+        JFrame frame = new JFrame("Social Media App " + (isChannel ? "(Channel UI)" : "(User UI)"));
         frame.setSize(600, 500);
 
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        JLabel titleLabel = new JLabel("Social Media App", SwingConstants.CENTER);
+        JLabel titleLabel = new JLabel("Social Media App"+ (isChannel ? "(Channel UI)" : "(User UI)"), SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
         titleLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 20, 0));
         mainPanel.add(titleLabel, BorderLayout.NORTH);
@@ -96,6 +97,7 @@ public class SocialMediaAppSwing {
 
         mainPanel.add(buttonPanel, BorderLayout.CENTER);
         frame.add(mainPanel);
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 
@@ -145,6 +147,7 @@ public class SocialMediaAppSwing {
         inputPanel.add(channelNameField, BorderLayout.CENTER);
         inputPanel.add(createButton, BorderLayout.SOUTH);
         frame.add(inputPanel);
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 
@@ -230,6 +233,8 @@ public class SocialMediaAppSwing {
         frame.add(inputPanel, BorderLayout.CENTER);
         frame.add(buttonPanel, BorderLayout.SOUTH);
 
+        frame.setLocationRelativeTo(null);
+
         // Display Frame
         frame.setVisible(true);
     }
@@ -305,7 +310,7 @@ public class SocialMediaAppSwing {
             // Add Components to Frame
             frame.add(inputPanel, BorderLayout.CENTER);
             frame.add(buttonPanel, BorderLayout.SOUTH);
-
+            frame.setLocationRelativeTo(null);
             // Display Frame
             frame.setVisible(true);
 
@@ -426,7 +431,7 @@ public class SocialMediaAppSwing {
         // Add Components to Frame
         frame.add(inputPanel, BorderLayout.CENTER);
         frame.add(buttonPanel, BorderLayout.SOUTH);
-
+        frame.setLocationRelativeTo(null);
         // Display Frame
         frame.setVisible(true);
     }
@@ -559,7 +564,7 @@ public class SocialMediaAppSwing {
             // Add Panels to Frame
             frame.add(inputPanel, BorderLayout.NORTH);
             frame.add(scrollPane, BorderLayout.CENTER);
-
+            frame.setLocationRelativeTo(null);
             // Display Frame
             frame.setVisible(true);
         } catch (Exception ex) {
